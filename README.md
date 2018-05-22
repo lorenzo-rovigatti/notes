@@ -1,5 +1,26 @@
 # My notes
 
+## Removing sensitive data from a git repository
+
+There are many guides and tutorials online, but here I will report a very straightforward recipe taken from [here](http://palexander.posthaven.com/remove-a-password-from-gits-commit-history-wi):
+
+```bash
+# Sync with the remote master
+git pull
+
+# Force your clone to look like HEAD
+git reset --hard
+
+# AGAIN, A WARNING: This can really break stuff!
+
+# Run your filter branch command, replacing all instances of "old_text" with "new_text"
+# The example looks for python files ("*.py"), you can change this to match your needs
+git filter-branch --tree-filter 'git ls-files -z "*.py" |xargs -0 perl -p -i -e "s#(old_text)#new_text#g"' -- --all
+
+# Overwrite your master with local changes
+git push origin master --force
+```
+
 ## Setting up NFS
 
 [NFS](https://en.wikipedia.org/wiki/Network_File_System) (Network File System) is a protocol that makes it possible to remotely (and transparently) access a file system over the network. Here I will explain how to setup a remote machine (aka the *server*) so that a local machine (aka the *client*) can have access to one or more of its directories.
