@@ -21,6 +21,12 @@ git filter-branch --tree-filter 'git ls-files -z "*.py" |xargs -0 perl -p -i -e 
 git push origin master --force
 ```
 
+## Setting up a Cisco VPN on kubuntu
+
+1. `sudo apt-get install network-manager-vpnc`
+2. If the system connection is not managed by `network-manager`, open the `/etc/NetworkManager/NetworkManager.conf` file, set `managed=true` and use the `[ifupdown]` connection.
+3. There are some issues with the gnome keyring. When using KDE, these issues can be overcome by saving the VPN passwords for all the users.
+
 ## Setting up NFS
 
 [NFS](https://en.wikipedia.org/wiki/Network_File_System) (Network File System) is a protocol that makes it possible to remotely (and transparently) access a file system over the network. Here I will explain how to setup a remote machine (aka the *server*) so that a local machine (aka the *client*) can have access to one or more of its directories.
