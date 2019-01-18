@@ -61,6 +61,11 @@ Many people recommend to compile slurm from the source, but if you do not need t
 2. On my Ubuntu box I had to run `/usr/sbin/create-munge-key` (with root permissions) to make it possible to start `munged`. Note that the generated key file, which by default is `/etc/munge/munge.key`, should be then copied over to all the nodes of the cluster.
 3. Slurm requires a mail program. This can be set in the `slurm.conf` file with the `MailProg` key which, if not set, points to `/bin/mail`. The simplest way of setting up a mailserver is to install postfix and makes it relay email to another server (see for example [here](https://linode.com/docs/email/postfix/postfix-smtp-debian7/)).
 
+Notes:
+
+* **The clock of all nodes must be synchronized!** This can be done on a per-node basis by issuing `sudo ntpdate -s ntp.ubuntu.com`
+* If slurm stops sending emails, remember that we are using the CNR mail which requires a change of password every $X$ (maybe 6?) months!
+
 ## Making movies
 
 We would like to generate a movie out of a (maybe very long) list of png images. We first create a file containing the list of png files sorted according to the order with which they should appear in the movie. If the names of the files are `img-1.png`, `img-2.png`, *etc.*, this can be accomplished by typing
