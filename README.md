@@ -1,5 +1,30 @@
 # My notes
 
+## Use `sudo` passwordlessly
+
+Run `sudo visudo` and add the following line:
+
+```
+my_user ALL=(ALL:ALL) PASSWD:ALL
+```
+
+where `my_user` is the user's username. The same effect can be obtained by running the following command:
+
+```bash
+echo 'user ALL=(ALL:ALL) PASSWD:ALL' | sudo EDITOR='tee -a' visudo
+```
+
+---
+
+## parallel-ssh cheat sheet
+
+* Use `-o DIR` to write the `stdout` of each node to a different file in the folder `DIR`
+* `-e DIR` does the same for the `stderr`
+* Use `-t 0` to disable timeouts
+* Use `-x '-t -t'` to run pseudo-TTY that allow using `sudo` commands
+
+---
+
 ## Removing sensitive data from a git repository
 
 There are many guides and tutorials online, but here I will report a very straightforward recipe taken from [here](http://palexander.posthaven.com/remove-a-password-from-gits-commit-history-wi):
@@ -27,6 +52,8 @@ git push origin master --force
 2. If the system connection is not managed by `network-manager`, open the `/etc/NetworkManager/NetworkManager.conf` file, set `managed=true` and use the `[ifupdown]` connection.
 3. There are some issues with the gnome keyring. When using KDE, these issues can be overcome by saving the VPN passwords for all the users.
 
+---
+
 ## Setting up NFS
 
 [NFS](https://en.wikipedia.org/wiki/Network_File_System) (Network File System) is a protocol that makes it possible to remotely (and transparently) access a file system over the network. Here I will explain how to setup a remote machine (aka the *server*) so that a local machine (aka the *client*) can have access to one or more of its directories.
@@ -53,6 +80,8 @@ git push origin master --force
      
 **Nota Bene:** on default installations, the shared directories are owned by the user and group identified by the `uid` and `gid` of the server, respectively. If the user on the client has a different `uid` and/or `gid`, its access to these directories may be limited. If this is the case (and if you are sure there will be no issues arising from such a drastic change) the best course of action is to change the user and group ids on either machine in order to make them match. This can done with the `usermod` command (*e.g.* `usermod -g 1110 -u 1205 lorenzo` will change lorenzo's `gid` and `uid` to 1110 and 1205, respectively). Note that `usermod` will change the ownership of all the files and directories that are in the user's home directory and are owned by them. The ownership of any other file or directory must be fixed manually.
 
+---
+
 ## Setting up slurm
 
 Many people recommend to compile slurm from the source, but if you do not need the cutting-edge version just use the one packaged for your distro. Once you have installed it consider the next few points:
@@ -65,6 +94,8 @@ Notes:
 
 * **The clock of all nodes must be synchronized!** This can be done on a per-node basis by issuing `sudo ntpdate -s ntp.ubuntu.com`
 * If slurm stops sending emails, remember that we are using the CNR mail which requires a change of password every $X$ (maybe 6?) months!
+
+---
 
 ## Making movies
 
@@ -90,6 +121,8 @@ $ mencoder mf://@list.dat -mf w=WIDTH:h=HEIGHT:fps=FPS:type=png -ovc xvid -xvide
 
 The `-ovc xvid` controls the type of output and may not be suitable on all systems (or for all the purposes). The `-xvidencopts bitrate=200` option sets a sort of *overall* quality of the output.
 
+---
+
 ## Adding a fading, rounded border to figures with GIMP
 
 1. Select the whole picture (`ctrl + a`)
@@ -101,6 +134,8 @@ The `-ovc xvid` controls the type of output and may not be suitable on all syste
 7. Turn white into alpha (Colours &rarr; Colour to Alpha)
 8. Create a new layer (same width and height as the figure) and put it underneath all other layers
 9. Fill the layer with the background colour you want your picture to fade to at the border (usually black)
+
+---
 
 ## Installing a PXE server
 
