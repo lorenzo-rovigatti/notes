@@ -1,5 +1,42 @@
 # My notes
 
+## Setup `zsh`
+
+```
+sudo apt install zsh
+sudo apt-get install powerline fonts-powerline
+git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+```
+
+Install custom plugins
+
+```
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+```
+
+Edit the .zshrc file to change stuff. For instance:
+
+```
+ZSH_THEME="agnoster"
+
+plugin(
+	git
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	)
+```
+
+Edit your terminal's appearance so that the default text is not black. For instance, using solarized's light them works well.
+
+Make `zsh` the default shell:
+
+```
+chsh -s /bin/zsh
+
+```
+
 ## Use `sudo` passwordlessly
 
 Run `sudo visudo` and add the following line:
