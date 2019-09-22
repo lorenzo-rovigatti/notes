@@ -74,9 +74,9 @@ git push origin master --force
  4. On the client, install the NFS client (the `nfs-common` package on Ubuntu)
  5. The remote filesystem can be mounted either manually (`sudo mount 192.168.0.1:/home/lorenzo/RESULTS /home/lorenzo/SERVER_RESULTS`) or automatically by adding a line like this to the `/etc/fstab` file:
  
-     ```192.168.0.1:/home/lorenzo/RESULTS /home/lorenzo/SERVER_RESULTS nfs rw,user,auto 0 0```
+     ```192.168.0.1:/home/lorenzo/RESULTS /home/lorenzo/SERVER_RESULTS nfs rw,user,auto,exec,bg,retry=10 0 0```
      
-     and then using `sudo mount -a`.  Here I assumed that the server has IP address `192.168.0.1` and that the directory `/home/lorenzo/CLIENT_RESULTS` exists on the client.
+     and then using `sudo mount -a`.  Here I assumed that the server has IP address `192.168.0.1` and that the directory `/home/lorenzo/CLIENT_RESULTS` exists on the client. The `bg` option tells `mount` to try to mount the drive in the background, while `retry=10` tells it to keep trying mounting it for 10 minutes.
      
 **Nota Bene:** on default installations, the shared directories are owned by the user and group identified by the `uid` and `gid` of the server, respectively. If the user on the client has a different `uid` and/or `gid`, its access to these directories may be limited. If this is the case (and if you are sure there will be no issues arising from such a drastic change) the best course of action is to change the user and group ids on either machine in order to make them match. This can done with the `usermod` command (*e.g.* `usermod -g 1110 -u 1205 lorenzo` will change lorenzo's `gid` and `uid` to 1110 and 1205, respectively). Note that `usermod` will change the ownership of all the files and directories that are in the user's home directory and are owned by them. The ownership of any other file or directory must be fixed manually.
 
