@@ -1,5 +1,11 @@
 # My notes
 
+## Export `reveal.js` slides to `pdf`
+
+* `cd /tmp`
+* `npm install decktape`
+* `/tmp/node_modules/decktape/decktape.js reveal --size='2048x1536' file:///home/lorenzo/PATH/TO/FILE/presentazione.pdf /tmp/slides.pdf`
+
 ## Setup `zsh`
 
 ```
