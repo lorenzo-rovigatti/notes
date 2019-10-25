@@ -1,3 +1,23 @@
+# LVM
+
+[Source](https://www.digitalocean.com/community/tutorials/an-introduction-to-lvm-concepts-terminology-and-operations)
+
+* `sudo apt-get install lvm2`
+* `sudo lvmdiskscan` shows all the devices visible to LVM
+* `sudo pvcreate /dev/sdX /dev/sdY` creates physical volumes
+* `sudo pvs` shows all the physical volumes
+* `sudo vgcreate LVMVolGroup /dev/sdX /dev/sdY` creates a new volume group and adds physical volumes to it
+* `sudo lvcreate -l 100%FREE -n global LVMVolGroup` creates a logical volume named `global` using the `LVMVolGroup` volume group. The `-l 100%FREE` flag will allocate the whole space to the new logical volume. Particular sizes can be specified with `-L` flag (`-L 10GB` for instance)
+* Logical volumes can be accessed in `/dev/volume_group/logical_volume` (*e.g.* `/dev/LVMVolGroup/global`)
+* `sudo mkfs.ext4 /dev/LVMVolGroup/global` formats the new logical volume
+* `sudo mkdir /global` creates a mount point
+* Add `/dev/LVMVolGroup/global /global ext4 defaults,nofail 0 0` to `/etc/fstab`
+* Add all users to the same group (*e.g.* `users`) and give it permissions over the mount point:
+	* `sudo chgrp -R users /global/`
+	* `sudo chmod -R g+w /global`
+	* `sudo find /global -type d -exec chmod 2775 {} \;` makes all files and directories created under `/global` are owned by the right group
+	* `sudo find /global -type f -exec chmod ug+rw {} \;` if the folder is empty this is probably not needed
+
 # My notes
 
 ## Export `reveal.js` slides to `pdf`
